@@ -1,15 +1,8 @@
-from datetime import datetime
-import os
-from flask_bootstrap import Bootstrap
-from flask import Flask, render_template, abort
-import json
-
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 app = Flask(__name__)
-Bootstrap(app)
-app.config["DEBUG"] = True
-app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/flasktest'
 # ?????????????????????
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
@@ -50,33 +43,6 @@ class File(db.Model):
         return "file is%s" % self.title
 
 
-@app.route('/')
-def index():
-    # db
-    files = File.query.all()
-    print(files)
-    return render_template('index.html', data=files)
-
-
-@app.route("/files/<fileid>")
-def file(fileid):
-    data = {}
-    files = File.query.filter_by(id=fileid).all()
-
-    if len(files) == 0:
-        abort(404)
-    else:
-        data['content'] = files[0].content
-        data['time'] = files[0].create_time
-        data['cate'] = files[0].category
-    return render_template('file.html', data=data)
-
-
-@app.errorhandler(404)
-def not_found(error):
-    return render_template("404.html"), 404
-
-
 if __name__ == '__main__':
     db.drop_all()
     db.create_all()
@@ -89,4 +55,7 @@ if __name__ == '__main__':
     db.session.add(file1)
     db.session.add(file12)
     db.session.commit()
-    app.run(port=3000)
+    """ a=Category.query.filter_by(id=1).first()
+    print(a.file.all())"""
+
+    # app.run(port=3000)
