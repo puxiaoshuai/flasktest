@@ -3,7 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/flasktest'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/flasktest'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:puhao@localhost/flasktest'
 # ?????????????????????
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
@@ -48,8 +49,12 @@ if __name__ == '__main__':
     db.create_all()
     java = Category('Java')
     python = Category('Python')
-    file1 = File('Hello,Java', "hahahahah,java", java, datetime.utcnow())
-    file12 = File('Hello,Python', "fsdfsdf,python", python, datetime.utcnow())
+    file1 = File('Hello,Java',
+                 "I don't have any idea who originally wrote these utilities. If anybody does, please send some mail to noel@gnu.ai.mit.edu and I'll add your information here!",
+                 java, datetime.utcnow())
+    file12 = File('Hello,Python',
+                  "A big thanks to Dirk for kicking me back into gear again after a long period of no work on this project.",
+                  python, datetime.utcnow())
     db.session.add(java)
     db.session.add(python)
     db.session.add(file1)

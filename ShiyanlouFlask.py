@@ -10,7 +10,8 @@ app = Flask(__name__)
 Bootstrap(app)
 app.config["DEBUG"] = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/flasktest'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/flasktest'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:puhao@localhost/flasktest'
 # ?????????????????????
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
@@ -28,7 +29,7 @@ class Category(db.Model):
         self.name = name
 
     def __repr__(self):
-        return "cate:%s" % self.name
+        return "%s" % self.name
 
 
 class File(db.Model):
@@ -48,6 +49,13 @@ class File(db.Model):
 
     def __repr__(self):
         return "file is%s" % self.title
+    def add_tag(self,tag_name):
+        pass
+    def remove_tag(self,tag_name):
+        pass
+    @property
+    def tags(self):
+        pass
 
 
 @app.route('/')
@@ -72,6 +80,7 @@ def file(fileid):
     return render_template('file.html', data=data)
 
 
+
 @app.errorhandler(404)
 def not_found(error):
     return render_template("404.html"), 404
@@ -82,8 +91,8 @@ if __name__ == '__main__':
     db.create_all()
     java = Category('Java')
     python = Category('Python')
-    file1 = File('Hello,Java', "hahahahah,java", java, datetime.utcnow())
-    file12 = File('Hello,Python', "fsdfsdf,python", python, datetime.utcnow())
+    file1 = File('Hello,Java', "I don't have any idea who originally wrote these utilities. If anybody does, please send some mail to noel@gnu.ai.mit.edu and I'll add your information here!", java, datetime.now())
+    file12 = File('Hello,Python', "A big thanks to Dirk for kicking me back into gear again after a long period of no work on this project.", python, datetime.utcnow())
     db.session.add(java)
     db.session.add(python)
     db.session.add(file1)
