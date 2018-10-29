@@ -6,7 +6,10 @@
     {% for article in data %}
 
          <h2>{{ article['title'] }}</h2>
-         <a href="{{ url_for('file', fileid=article.id) }}">查看更多</a>
+         <a href="{{ url_for('file', fileid=article.id) }}">查看详情</a>
+        {% for tag in article.tags %}
+         <span>{{ tag }}</span>
+        {% endfor %}
         <br/>
 
 
